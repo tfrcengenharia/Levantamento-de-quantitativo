@@ -21,10 +21,14 @@ export default function Header() {
   return (
     <header className="flex items-center justify-between border-b border-brand/10 bg-white dark:bg-slate-900 px-6 py-4 lg:px-20">
       <div className="flex items-center gap-4">
-        <div className="size-8 text-brand">
-          <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-            <path clipRule="evenodd" d="M12.0799 24L4 19.2479L9.95537 8.75216L18.04 13.4961L18.0446 4H29.9554L29.96 13.4961L38.0446 8.75216L44 19.2479L35.92 24L44 28.7521L38.0446 39.2479L29.96 34.5039L29.9554 44H18.0446L18.04 34.5039L9.95537 39.2479L4 28.7521L12.0799 24Z" fill="currentColor" fillRule="evenodd"></path>
-          </svg>
+        <div className="relative size-10 text-brand">
+          <Image 
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCP6l0w4b7C-dWgsNrOk7k10uxbxSF06Rj_YP3cziK9U5uEBtOdqdZnLxSHkTThSq6JemfOt2-l1AfEyY4OONlXg2jidUw00qpenHm2-To4tsmPXr275mtZ1mVcNQQ241Z_vN_zfRIDeuCyIlUO1XChDdwXnzQtPk_hJ87medUuQkNAhu9NQP5AzV0RF_jZTyY3_zR2bMQU2HDlYJr69OEHj_g41M-pSDedAsbZyKbDflMLze7-1W22v6V51oNZiUP-lzV7nt7quM3H"
+            alt="TFRC Engenharia Logo"
+            fill
+            className="object-contain"
+            referrerPolicy="no-referrer"
+          />
         </div>
         <h2 className="text-xl font-bold tracking-tight text-brand">TFRC Engenharia</h2>
       </div>
