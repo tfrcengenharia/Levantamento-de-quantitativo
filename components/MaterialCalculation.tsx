@@ -805,10 +805,10 @@ export default function MaterialCalculation() {
                       <td className="p-1 border-r bg-slate-50 dark:bg-slate-800/50 text-center text-slate-500 cursor-not-allowed">{displayValue(row.cimentoChapiscoKg)}</td>
                       <td className="p-1 border-r bg-slate-50 dark:bg-slate-800/50 text-center text-slate-500 cursor-not-allowed">{displayValue(row.areiaChapiscoM3, 2)}</td>
                       <td className="p-1 border-r bg-slate-50 dark:bg-slate-800/50 text-center text-slate-500 cursor-not-allowed"></td>
-                      <td className="p-1 border-r bg-slate-50 dark:bg-slate-800/50 text-center text-slate-500 cursor-not-allowed">{displayValue(row.areaRebocoVal)}</td>
-                      <td className="p-1 border-r bg-slate-50 dark:bg-slate-800/50 text-center text-slate-500 cursor-not-allowed">{displayValue(row.cimentoRebocoKg)}</td>
-                      <td className="p-1 border-r bg-slate-50 dark:bg-slate-800/50 text-center text-slate-500 cursor-not-allowed">{displayValue(row.calRebocoM3, 2)}</td>
-                      <td className="p-1 border-r bg-slate-50 dark:bg-slate-800/50 text-center text-slate-500 cursor-not-allowed">{displayValue(row.areiaRebocoM3, 2)}</td>
+                      <td className="p-1 border-r bg-slate-50 dark:bg-slate-800/50 text-center text-slate-500 cursor-not-allowed"></td>
+                      <td className="p-1 border-r bg-slate-50 dark:bg-slate-800/50 text-center text-slate-500 cursor-not-allowed"></td>
+                      <td className="p-1 border-r bg-slate-50 dark:bg-slate-800/50 text-center text-slate-500 cursor-not-allowed"></td>
+                      <td className="p-1 border-r bg-slate-50 dark:bg-slate-800/50 text-center text-slate-500 cursor-not-allowed"></td>
                       <td className="p-1 text-center">
                         <button 
                           onClick={() => deleteRow(row.id)}
@@ -872,14 +872,11 @@ export default function MaterialCalculation() {
                     <td className="p-1 border-r border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800/50 text-center text-red-600">{displayValue(calculatedDiscountRow.cimentoKg)}</td>
                     <td className="p-1 border-r border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800/50 text-center text-red-600">{displayValue(calculatedDiscountRow.calM3, 2)}</td>
                     <td className="p-1 border-r border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800/50 text-center text-red-600">{displayValue(calculatedDiscountRow.areiaM3, 2)}</td>
-                    <td className="p-1 border-r border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800/50 text-center text-red-600">{displayValue(calculatedDiscountRow.areaChapiscoVal)}</td>
-                    <td className="p-1 border-r border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800/50 text-center text-red-600">{displayValue(calculatedDiscountRow.cimentoChapiscoKg)}</td>
-                    <td className="p-1 border-r border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800/50 text-center text-red-600">{displayValue(calculatedDiscountRow.areiaChapiscoM3, 2)}</td>
-                    <td className="p-1 border-r border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800/50 text-center"></td>
-                    <td className="p-1 border-r border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800/50 text-center text-red-600">{displayValue(calculatedDiscountRow.areaRebocoVal)}</td>
-                    <td className="p-1 border-r border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800/50 text-center text-red-600">{displayValue(calculatedDiscountRow.cimentoRebocoKg)}</td>
-                    <td className="p-1 border-r border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800/50 text-center text-red-600">{displayValue(calculatedDiscountRow.calRebocoM3, 2)}</td>
-                    <td className="p-1 border-r border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800/50 text-center text-red-600">{displayValue(calculatedDiscountRow.areiaRebocoM3, 2)}</td>
+                    <td className="p-1 border-r border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800/50 text-center text-red-600"></td>
+                    <td className="p-1 border-r border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800/50 text-center text-red-600"></td>
+                    <td className="p-1 border-r border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800/50 text-center text-red-600"></td>
+                    <td className="p-1 border-r border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800/50 text-center text-red-600"></td>
+                    <td className="p-1 border-r border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800/50 text-center text-red-600"></td>
                     <td className="p-1 text-center"></td>
                   </tr>
                   {/* Linha de Total com Desconto */}

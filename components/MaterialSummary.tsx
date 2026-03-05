@@ -74,7 +74,7 @@ export default function MaterialSummary({
               <td className="p-1.5 border-r border-black font-bold uppercase bg-white">CIMENTO</td>
               <td className="p-1.5 border-r border-black bg-white"></td>
               <td className="p-1.5 border-r border-black text-center font-bold bg-white text-sm">
-                {formatNum(Math.ceil((totals.cimentoKg + totals.cimentoChapiscoKg + totals.cimentoRebocoKg) / 50), 0)}
+                {formatNum(Math.round((totals.cimentoKg + totals.cimentoChapiscoKg + totals.cimentoRebocoKg) / 50), 0)}
               </td>
               <td className="p-1.5 text-center font-bold bg-white">SACA</td>
             </tr>
@@ -94,7 +94,7 @@ export default function MaterialSummary({
               <td className="p-1.5 border-r border-black font-bold uppercase bg-white">GESSO PARA REBOCO</td>
               <td className="p-1.5 border-r border-black bg-white"></td>
               <td className="p-1.5 border-r border-black text-center font-bold bg-white text-sm">
-                {formatNum(Math.ceil(totals.gessoKg / 40), 0)}
+                {formatNum(Math.round(totals.gessoKg / 40), 0)}
               </td>
               <td className="p-1.5 text-center font-bold bg-white">SACA 40KG</td>
             </tr>
@@ -116,7 +116,7 @@ export default function MaterialSummary({
               <td className="p-1.5 border-r border-black font-bold uppercase bg-white">CAL</td>
               <td className="p-1.5 border-r border-black bg-white"></td>
               <td className="p-1.5 border-r border-black text-center font-bold bg-white text-sm">
-                {formatNum(Math.ceil((totals.calM3 + totals.calRebocoM3) / 0.036), 0)}
+                {formatNum(Math.round((totals.calM3 + totals.calRebocoM3) * 40), 0)}
               </td>
               <td className="p-1.5 text-center font-bold bg-white">SACA</td>
             </tr>
