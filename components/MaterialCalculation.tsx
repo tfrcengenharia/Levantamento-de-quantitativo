@@ -882,9 +882,9 @@ export default function MaterialCalculation() {
                     <td className="p-1 border-r border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800/50 text-center text-red-600">{displayValue(calculatedDiscountRow.cimentoKg)}</td>
                     <td className="p-1 border-r border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800/50 text-center text-red-600">{displayValue(calculatedDiscountRow.calM3, 2)}</td>
                     <td className="p-1 border-r border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800/50 text-center text-red-600">{displayValue(calculatedDiscountRow.areiaM3, 2)}</td>
-                    <td className="p-1 border-r border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800/50 text-center text-red-600"></td>
-                    <td className="p-1 border-r border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800/50 text-center text-red-600"></td>
-                    <td className="p-1 border-r border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800/50 text-center text-red-600"></td>
+                    <td className="p-1 border-r border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800/50 text-center text-red-600">{displayValue(calculatedDiscountRow.areaChapiscoVal)}</td>
+                    <td className="p-1 border-r border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800/50 text-center text-red-600">{displayValue(calculatedDiscountRow.cimentoChapiscoKg)}</td>
+                    <td className="p-1 border-r border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800/50 text-center text-red-600">{displayValue(calculatedDiscountRow.areiaChapiscoM3, 2)}</td>
                     <td className="p-1 border-r border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800/50 text-center text-red-600"></td>
                     <td className="p-1 border-r border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800/50 text-center text-red-600"></td>
                     <td className="p-1 text-center"></td>
