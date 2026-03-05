@@ -238,14 +238,16 @@ export default function MaterialCalculation() {
     const propCimReboco = parseNum(tracoRebocoCimento) || 1;
     const propCalReboco = parseNum(tracoRebocoCal);
     const propAreiaReboco = parseNum(tracoRebocoAreia);
-    const areaRebocoVal = areaChapiscoVal; // Simplificação: área de reboco = área de chapisco
-    const cimentoRebocoKg = rendCimRebocoVal > 0 ? (50 / rendCimRebocoVal) * areaRebocoVal : 0;
-    const calRebocoM3 = aditivoReboco === 'SIM' ? 0 : (0.036 / 50) * cimentoRebocoKg * (propCalReboco / propCimReboco);
-    const areiaRebocoM3 = (0.036 / 50) * cimentoRebocoKg * (propAreiaReboco / propCimReboco);
+    
+    // Reboco is zero for discount row
+    const areaRebocoVal = isDiscount ? 0 : areaChapiscoVal; 
+    const cimentoRebocoKg = !isDiscount && rendCimRebocoVal > 0 ? (50 / rendCimRebocoVal) * areaRebocoVal : 0;
+    const calRebocoM3 = !isDiscount && aditivoReboco === 'SIM' ? 0 : (0.036 / 50) * cimentoRebocoKg * (propCalReboco / propCimReboco);
+    const areiaRebocoM3 = !isDiscount ? (0.036 / 50) * cimentoRebocoKg * (propAreiaReboco / propCimReboco) : 0;
 
     const aditivoRebocoObj = aditivos.find(a => a.nome === nomeAditivoReboco);
     const yieldReboco = aditivoRebocoObj ? parseNum(aditivoRebocoObj.rendimento) : 0;
-    const aditivoRebocoLitros = aditivoReboco === 'SIM' ? (cimentoRebocoKg / 50) * yieldReboco : 0;
+    const aditivoRebocoLitros = !isDiscount && aditivoReboco === 'SIM' ? (cimentoRebocoKg / 50) * yieldReboco : 0;
 
     return {
       ...row,

@@ -6,6 +6,8 @@ import { Menu, LogOut, User } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import { logout } from '@/app/auth/actions';
 
+import Link from 'next/link';
+
 export default function Header() {
   const [user, setUser] = useState<any>(null);
   const supabase = createClient();
@@ -33,8 +35,9 @@ export default function Header() {
         <h2 className="text-xl font-bold tracking-tight text-brand">TFRC Engenharia</h2>
       </div>
       <nav className="hidden md:flex items-center gap-8">
-        <a className="text-brand text-sm font-semibold border-b-2 border-brand pb-1" href="#">Nova Ficha</a>
-        <a className="text-slate-500 dark:text-slate-400 text-sm font-medium hover:text-brand transition-colors" href="#">Histórico de Vistorias</a>
+        <Link className="text-brand text-sm font-semibold border-b-2 border-brand pb-1" href="/">Alvenaria</Link>
+        <Link className="text-slate-500 dark:text-slate-400 text-sm font-medium hover:text-brand transition-colors" href="/esquadrias">Esquadrias</Link>
+        <Link className="text-slate-500 dark:text-slate-400 text-sm font-medium hover:text-brand transition-colors" href="#">Histórico de Vistorias</Link>
       </nav>
       <div className="flex items-center gap-4">
         <div className="text-right hidden sm:block">
