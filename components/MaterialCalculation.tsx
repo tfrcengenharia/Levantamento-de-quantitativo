@@ -5,6 +5,7 @@ import { LayoutGrid, Database, Calculator, HelpCircle, Plus, Trash2, RotateCcw }
 import { motion, AnimatePresence } from 'motion/react';
 import { BRICK_DATABASE } from '@/data/brickDatabase';
 import MaterialSummary from './MaterialSummary';
+import TechnicalConsultation from './TechnicalConsultation';
 
 interface Aditivo {
   id: string;
@@ -64,7 +65,7 @@ export default function MaterialCalculation() {
   // Data Model Dinâmico (Aditivos)
   const [aditivos, setAditivos] = useState<Aditivo[]>([
     { id: '1', nome: 'QUIMIKAL', rendimento: '0,20' },
-    { id: '2', nome: 'VEDALIT', rendimento: '0,10' },
+    { id: '2', nome: 'VEDALIT', rendimento: '0,12' },
     { id: '3', nome: 'VIACAL', rendimento: '0,10' },
     { id: '4', nome: 'SIKANOL', rendimento: '0,10' },
   ]);
@@ -77,7 +78,7 @@ export default function MaterialCalculation() {
     
     const defaults: Record<string, string> = {
       'QUIMIKAL': '0,20',
-      'VEDALIT': '0,10',
+      'VEDALIT': '0,12',
       'VIACAL': '0,10',
       'SIKANOL': '0,10'
     };
@@ -957,14 +958,17 @@ export default function MaterialCalculation() {
             </div>
           </div>
 
-          {/* 3. Resumo de Materiais */}
-          <MaterialSummary 
-            calculatedRows={calculatedRows}
-            calculatedDiscountRow={calculatedDiscountRow}
-            totals={totals}
-            nomeAditivoAssentamento={nomeAditivoAssentamento}
-            nomeAditivoReboco={nomeAditivoReboco}
-          />
+          {/* 3. Resumo de Materiais e Consulta Técnica */}
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 items-start">
+            <MaterialSummary 
+              calculatedRows={calculatedRows}
+              calculatedDiscountRow={calculatedDiscountRow}
+              totals={totals}
+              nomeAditivoAssentamento={nomeAditivoAssentamento}
+              nomeAditivoReboco={nomeAditivoReboco}
+            />
+            <TechnicalConsultation />
+          </div>
         </div>
       ) : (
         <div className="p-6 overflow-x-auto">

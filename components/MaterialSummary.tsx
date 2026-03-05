@@ -74,7 +74,7 @@ export default function MaterialSummary({
               <td className="p-1.5 border-r border-black font-bold uppercase bg-white">CIMENTO</td>
               <td className="p-1.5 border-r border-black bg-white"></td>
               <td className="p-1.5 border-r border-black text-center font-bold bg-white text-sm">
-                {formatNum(Math.round((totals.cimentoKg + totals.cimentoChapiscoKg + totals.cimentoRebocoKg) / 50), 0)}
+                {formatNum(Math.round(((totals.cimentoKg + totals.cimentoChapiscoKg + totals.cimentoRebocoKg) / 50) * 1.15), 0)}
               </td>
               <td className="p-1.5 text-center font-bold bg-white">SACA</td>
             </tr>
@@ -84,7 +84,7 @@ export default function MaterialSummary({
               <td className="p-1.5 border-r border-black font-bold uppercase bg-white">AREIA</td>
               <td className="p-1.5 border-r border-black bg-white"></td>
               <td className="p-1.5 border-r border-black text-center font-bold bg-white text-sm">
-                {formatNum(totals.areiaM3 + totals.areiaChapiscoM3 + totals.areiaRebocoM3, 2)}
+                {formatNum((totals.areiaM3 + totals.areiaChapiscoM3 + totals.areiaRebocoM3) * 1.15, 2)}
               </td>
               <td className="p-1.5 text-center font-bold bg-white">m³</td>
             </tr>
