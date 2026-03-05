@@ -10,15 +10,23 @@ import Link from 'next/link';
 
 export default function Header() {
   const [user, setUser] = useState<any>(null);
-  const supabase = createClient();
+  const [supabase] = useState(() => createClient());
 
   useEffect(() => {
     const getUser = async () => {
-      const { data, error } = await supabase.auth.getUser();
-      setUser(data?.user);
+      try {
+        const { data, error } = await supabase.auth.getUser();
+        if (error) {
+          console.error('Error fetching user:', error);
+          return;
+        }
+        setUser(data?.user);
+      } catch (err) {
+        console.error('Unexpected error fetching user:', err);
+      }
     };
     getUser();
-  }, [supabase.auth]);
+  }, [supabase]);
 
   return (
     <header className="flex items-center justify-between border-b border-brand/10 bg-white dark:bg-slate-900 px-6 py-4 lg:px-20">
