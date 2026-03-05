@@ -20,14 +20,16 @@ export async function updateSession(request: NextRequest) {
             supabaseResponse = NextResponse.next({
               request,
             });
-            cookiesToSet.forEach(({ name, value, options }) =>
-              supabaseResponse.cookies.set(name, value, options)
-            );
+            cookiesToSet.forEach(({ name, value, options }) => {
+              const secureOptions = { ...options, sameSite: 'none' as const, secure: true };
+              supabaseResponse.cookies.set(name, value, secureOptions);
+            });
           } catch (e) {
             // If we can't set cookies on the request, we still want to set them on the response
-            cookiesToSet.forEach(({ name, value, options }) =>
-              supabaseResponse.cookies.set(name, value, options)
-            );
+            cookiesToSet.forEach(({ name, value, options }) => {
+              const secureOptions = { ...options, sameSite: 'none' as const, secure: true };
+              supabaseResponse.cookies.set(name, value, secureOptions);
+            });
           }
         },
       },
