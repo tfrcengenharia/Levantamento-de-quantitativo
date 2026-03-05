@@ -17,7 +17,10 @@ export default function Header() {
       try {
         const { data, error } = await supabase.auth.getUser();
         if (error) {
-          console.error('Error fetching user:', error);
+          // Only log if it's not a missing session error
+          if (error.message !== 'Auth session missing!') {
+            console.error('Error fetching user:', error);
+          }
           return;
         }
         setUser(data?.user);
@@ -25,7 +28,16 @@ export default function Header() {
         console.error('Unexpected error fetching user:', err);
       }
     };
+
     getUser();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
   }, [supabase]);
 
   return (
