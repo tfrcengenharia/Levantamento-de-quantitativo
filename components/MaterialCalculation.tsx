@@ -203,8 +203,7 @@ export default function MaterialCalculation() {
     const cementYield = row.assentamentoType === '1/2 VEZ' ? selectedBrick.yieldHalf : selectedBrick.yieldFull;
 
     const totalBricksExact = areaVal * brickQtyPerM2;
-    const decimalPart = totalBricksExact % 1;
-    const totalBricksCommercial = decimalPart < 0.10 ? Math.floor(totalBricksExact) : Math.ceil(totalBricksExact);
+    const totalBricksCommercial = Math.ceil(totalBricksExact);
 
     // Assentamento
     const cimentoKg = cementYield > 0 ? (50 / cementYield) * areaVal : 0;

@@ -22,15 +22,15 @@ export default function MaterialSummary({
   const brickSummary = BRICK_DATABASE.map(brick => {
     const totalForType = calculatedRows
       .filter(row => row.selectedBrickType === brick.type)
-      .reduce((acc, curr) => acc + curr.totalBricksCommercial, 0);
+      .reduce((acc, curr) => acc + curr.totalBricksExact, 0);
     
     const discountForType = calculatedDiscountRow.selectedBrickType === brick.type 
-      ? calculatedDiscountRow.totalBricksCommercial 
+      ? calculatedDiscountRow.totalBricksExact 
       : 0;
 
     return {
       type: brick.type,
-      quantity: Math.max(0, totalForType - discountForType)
+      quantity: Math.ceil(totalForType - discountForType)
     };
   });
 
@@ -63,7 +63,7 @@ export default function MaterialSummary({
                 <td className="p-1.5 border-r border-black font-bold uppercase w-1/4 bg-white">TIJOLO</td>
                 <td className="p-1.5 border-r border-black w-1/3 bg-white">{brick.type}</td>
                 <td className="p-1.5 border-r border-black text-center font-bold w-1/4 bg-white text-sm">
-                  {brick.quantity > 0 ? formatNum(brick.quantity, 2) : ''}
+                  {brick.quantity > 0 ? formatNum(brick.quantity, 0) : ''}
                 </td>
                 <td className="p-1.5 text-center font-bold w-1/6 bg-white">Und</td>
               </tr>
@@ -74,7 +74,7 @@ export default function MaterialSummary({
               <td className="p-1.5 border-r border-black font-bold uppercase bg-white">CIMENTO</td>
               <td className="p-1.5 border-r border-black bg-white"></td>
               <td className="p-1.5 border-r border-black text-center font-bold bg-white text-sm">
-                {formatNum((totals.cimentoKg + totals.cimentoChapiscoKg + totals.cimentoRebocoKg) / 50)}
+                {formatNum(Math.ceil((totals.cimentoKg + totals.cimentoChapiscoKg + totals.cimentoRebocoKg) / 50), 0)}
               </td>
               <td className="p-1.5 text-center font-bold bg-white">SACA</td>
             </tr>
@@ -84,7 +84,7 @@ export default function MaterialSummary({
               <td className="p-1.5 border-r border-black font-bold uppercase bg-white">AREIA</td>
               <td className="p-1.5 border-r border-black bg-white"></td>
               <td className="p-1.5 border-r border-black text-center font-bold bg-white text-sm">
-                {formatNum(totals.areiaM3 + totals.areiaChapiscoM3 + totals.areiaRebocoM3)}
+                {formatNum(totals.areiaM3 + totals.areiaChapiscoM3 + totals.areiaRebocoM3, 2)}
               </td>
               <td className="p-1.5 text-center font-bold bg-white">m³</td>
             </tr>
@@ -94,7 +94,7 @@ export default function MaterialSummary({
               <td className="p-1.5 border-r border-black font-bold uppercase bg-white">GESSO PARA REBOCO</td>
               <td className="p-1.5 border-r border-black bg-white"></td>
               <td className="p-1.5 border-r border-black text-center font-bold bg-white text-sm">
-                {formatNum(totals.gessoKg / 40)}
+                {formatNum(Math.ceil(totals.gessoKg / 40), 0)}
               </td>
               <td className="p-1.5 text-center font-bold bg-white">SACA 40KG</td>
             </tr>
@@ -106,7 +106,7 @@ export default function MaterialSummary({
               </td>
               <td className="p-1.5 border-r border-black bg-white"></td>
               <td className="p-1.5 border-r border-black text-center font-bold bg-white text-sm">
-                {formatNum(totals.aditivoAssentamentoLitros + totals.aditivoRebocoLitros)}
+                {formatNum(totals.aditivoAssentamentoLitros + totals.aditivoRebocoLitros, 2)}
               </td>
               <td className="p-1.5 text-center font-bold bg-white">L</td>
             </tr>
@@ -116,7 +116,7 @@ export default function MaterialSummary({
               <td className="p-1.5 border-r border-black font-bold uppercase bg-white">CAL</td>
               <td className="p-1.5 border-r border-black bg-white"></td>
               <td className="p-1.5 border-r border-black text-center font-bold bg-white text-sm">
-                {formatNum((totals.calM3 + totals.calRebocoM3) / 0.036)}
+                {formatNum(Math.ceil((totals.calM3 + totals.calRebocoM3) / 0.036), 0)}
               </td>
               <td className="p-1.5 text-center font-bold bg-white">SACA</td>
             </tr>
