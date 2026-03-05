@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { LayoutGrid, Database, Calculator, HelpCircle, Plus, Trash2, RotateCcw } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { BRICK_DATABASE } from '@/data/brickDatabase';
@@ -40,20 +40,26 @@ export default function MaterialCalculation() {
   const [activeTab, setActiveTab] = useState<'calc' | 'data'>('calc');
   const [showTooltip, setShowTooltip] = useState(false);
 
-  const [rows, setRows] = useState<WallRow[]>(
-    Array.from({ length: 10 }, createEmptyRow)
+  const [rows, setRows] = useState<WallRow[]>(() => 
+    Array.from({ length: 10 }, (_, i) => ({
+      ...createEmptyRow(),
+      id: `initial-${i}` // Stable ID for hydration
+    }))
   );
+  const [isMounted, setIsMounted] = useState(false);
 
-  const [discountRow, setDiscountRow] = useState<WallRow>({
+  useEffect(() => {
+    const timer = setTimeout(() => setIsMounted(true), 0);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const [discountRow, setDiscountRow] = useState<WallRow>(() => ({
     ...createEmptyRow(),
     id: 'discount-row',
     idParede: 'DESCONTO',
     isDiscountRow: true,
-    // TODO: INTEGRAÇÃO ESQUADRIAS
-    // O valor 2.90 é temporário. No futuro, essa variável será alimentada automaticamente 
-    // pelo resultado da soma total da aba/tabela de Esquadrias.
     manualArea: '2,90',
-  });
+  }));
 
   // Data Model Dinâmico (Aditivos)
   const [aditivos, setAditivos] = useState<Aditivo[]>([
@@ -367,6 +373,8 @@ export default function MaterialCalculation() {
     const cleanVal = val.replace(/[^\d,.]/g, '');
     setter(cleanVal);
   };
+
+  if (!isMounted) return null;
 
   return (
     <section className="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden space-y-0">

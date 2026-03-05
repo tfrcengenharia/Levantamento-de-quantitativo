@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ListTodo, Plus, Trash2, PlusCircle } from 'lucide-react';
 
 interface SurveyItem {
@@ -31,6 +31,14 @@ export default function SurveyItems() {
       observations: 'Caçambas padrão de 5m³',
     },
   ]);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsMounted(true), 0);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (!isMounted) return null;
 
   // Helper to parse Brazilian formatted numbers
   const parseNum = (val: string) => {
