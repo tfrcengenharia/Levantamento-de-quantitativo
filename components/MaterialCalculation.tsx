@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { LayoutGrid, Database, Calculator, HelpCircle, Plus, Trash2, RotateCcw } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { BRICK_DATABASE } from '@/data/brickDatabase';
+import MaterialSummary from './MaterialSummary';
 
 interface Aditivo {
   id: string;
@@ -951,79 +952,13 @@ export default function MaterialCalculation() {
           </div>
 
           {/* 3. Resumo de Materiais */}
-          <div className="bg-white dark:bg-slate-800/50 pt-4">
-            <div className="max-w-md mx-auto">
-              <div className="bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden">
-                <div className="bg-brand px-4 py-2">
-                  <h3 className="text-white text-xs font-bold uppercase tracking-widest text-center">Resumo do Cálculo</h3>
-                </div>
-                <table className="w-full text-sm">
-                  <tbody className="divide-y divide-slate-100 dark:divide-slate-800 uppercase">
-                    <tr>
-                      <td className="px-4 py-2 font-medium text-slate-700 dark:text-slate-300">Tijolo Selecionado</td>
-                      <td className="px-4 py-2 text-right font-bold text-brand text-[10px]">{rows[0]?.selectedBrickType}</td>
-                    </tr>
-                    <tr>
-                      <td className="px-4 py-2 font-medium text-slate-700 dark:text-slate-300">Total de Tijolos (Exato)</td>
-                      <td className="px-4 py-2 text-right font-bold text-brand">{formatNum(totals.totalBricksExact)} <span className="text-[10px] text-slate-400 font-normal ml-1">Und</span></td>
-                    </tr>
-                    <tr>
-                      <td className="px-4 py-2 font-medium text-slate-700 dark:text-slate-300">Total de Tijolos (Comercial)</td>
-                      <td className="px-4 py-2 text-right font-bold text-brand">{totals.totalBricksCommercial} <span className="text-[10px] text-slate-400 font-normal ml-1">Und</span></td>
-                    </tr>
-                    <tr>
-                      <td className="px-4 py-2 font-medium text-slate-700 dark:text-slate-300">Cimento (Assentamento)</td>
-                      <td className="px-4 py-2 text-right font-bold text-brand">{formatNum(totals.cimentoKg)} <span className="text-[10px] text-slate-400 font-normal ml-1">Kg</span></td>
-                    </tr>
-                    <tr>
-                      <td className="px-4 py-2 font-medium text-slate-700 dark:text-slate-300">Cimento (Chapisco)</td>
-                      <td className="px-4 py-2 text-right font-bold text-brand">{formatNum(totals.cimentoChapiscoKg)} <span className="text-[10px] text-slate-400 font-normal ml-1">Kg</span></td>
-                    </tr>
-                    <tr>
-                      <td className="px-4 py-2 font-medium text-slate-700 dark:text-slate-300">Cal (Assentamento)</td>
-                      <td className="px-4 py-2 text-right font-bold text-brand">{displayValue(totals.calM3, 2)} <span className="text-[10px] text-slate-400 font-normal ml-1">m³</span></td>
-                    </tr>
-                    <tr>
-                      <td className="px-4 py-2 font-medium text-slate-700 dark:text-slate-300">Areia (Assentamento)</td>
-                      <td className="px-4 py-2 text-right font-bold text-brand">{formatNum(totals.areiaM3, 2)} <span className="text-[10px] text-slate-400 font-normal ml-1">m³</span></td>
-                    </tr>
-                    <tr>
-                      <td className="px-4 py-2 font-medium text-slate-700 dark:text-slate-300">Areia (Chapisco)</td>
-                      <td className="px-4 py-2 text-right font-bold text-brand">{formatNum(totals.areiaChapiscoM3, 2)} <span className="text-[10px] text-slate-400 font-normal ml-1">m³</span></td>
-                    </tr>
-                    <tr>
-                      <td className="px-4 py-2 font-medium text-slate-700 dark:text-slate-300">Cimento (Reboco)</td>
-                      <td className="px-4 py-2 text-right font-bold text-brand">{formatNum(totals.cimentoRebocoKg)} <span className="text-[10px] text-slate-400 font-normal ml-1">Kg</span></td>
-                    </tr>
-                    <tr>
-                      <td className="px-4 py-2 font-medium text-slate-700 dark:text-slate-300">Cal (Reboco)</td>
-                      <td className="px-4 py-2 text-right font-bold text-brand">{displayValue(totals.calRebocoM3, 2)} <span className="text-[10px] text-slate-400 font-normal ml-1">m³</span></td>
-                    </tr>
-                    <tr>
-                      <td className="px-4 py-2 font-medium text-slate-700 dark:text-slate-300">Areia (Reboco)</td>
-                      <td className="px-4 py-2 text-right font-bold text-brand">{formatNum(totals.areiaRebocoM3, 2)} <span className="text-[10px] text-slate-400 font-normal ml-1">m³</span></td>
-                    </tr>
-                    <tr>
-                      <td className="px-4 py-2 font-medium text-slate-700 dark:text-slate-300">Aditivo (Assentamento)</td>
-                      <td className="px-4 py-2 text-right font-bold text-brand">{displayValue(totals.aditivoAssentamentoLitros, 2)} <span className="text-[10px] text-slate-400 font-normal ml-1">L</span></td>
-                    </tr>
-                    <tr>
-                      <td className="px-4 py-2 font-medium text-slate-700 dark:text-slate-300">Aditivo (Reboco)</td>
-                      <td className="px-4 py-2 text-right font-bold text-brand">{displayValue(totals.aditivoRebocoLitros, 2)} <span className="text-[10px] text-slate-400 font-normal ml-1">L</span></td>
-                    </tr>
-                    <tr>
-                      <td className="px-4 py-2 font-medium text-slate-700 dark:text-slate-300">Gesso Necessário</td>
-                      <td className="px-4 py-2 text-right font-bold text-brand">{displayValue(totals.gessoKg)} <span className="text-[10px] text-slate-400 font-normal ml-1">Kg</span></td>
-                    </tr>
-                    <tr className="bg-slate-50 dark:bg-slate-800/50">
-                      <td className="px-4 py-2 font-bold text-slate-700 dark:text-slate-300">Área Total</td>
-                      <td className="px-4 py-2 text-right font-bold text-brand">{formatNum(totals.areaAlvenaria)} <span className="text-[10px] text-slate-400 font-normal ml-1">m²</span></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
+          <MaterialSummary 
+            calculatedRows={calculatedRows}
+            calculatedDiscountRow={calculatedDiscountRow}
+            totals={totals}
+            nomeAditivoAssentamento={nomeAditivoAssentamento}
+            nomeAditivoReboco={nomeAditivoReboco}
+          />
         </div>
       ) : (
         <div className="p-6 overflow-x-auto">
