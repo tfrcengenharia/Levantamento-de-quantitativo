@@ -10,13 +10,21 @@ export async function login(formData: FormData) {
   const email = formData.get('email') as string;
   const password = formData.get('password') as string;
 
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    return redirect('/login?error=' + encodeURIComponent('Configuração do Supabase ausente. Verifique as variáveis de ambiente no painel de Secrets.'));
+  }
+
   const { error } = await supabase.auth.signInWithPassword({
     email,
     password,
   });
 
   if (error) {
-    return redirect('/login?error=' + encodeURIComponent(error.message));
+    let message = error.message;
+    if (message === 'Invalid login credentials') {
+      message = 'E-mail ou senha incorretos. Verifique se você já confirmou seu e-mail ou se possui uma conta.';
+    }
+    return redirect('/login?error=' + encodeURIComponent(message));
   }
 
   revalidatePath('/', 'layout');
@@ -29,9 +37,16 @@ export async function signup(formData: FormData) {
   const email = formData.get('email') as string;
   const password = formData.get('password') as string;
 
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    return redirect('/signup?error=' + encodeURIComponent('Configuração do Supabase ausente. Verifique as variáveis de ambiente no painel de Secrets.'));
+  }
+
   const { error } = await supabase.auth.signUp({
     email,
     password,
+    options: {
+      emailRedirectTo: `${process.env.APP_URL}/auth/callback`,
+    },
   });
 
   if (error) {
@@ -39,7 +54,7 @@ export async function signup(formData: FormData) {
   }
 
   revalidatePath('/', 'layout');
-  redirect('/login?message=' + encodeURIComponent('Verifique seu e-mail para confirmar o cadastro.'));
+  redirect('/login?message=' + encodeURIComponent('Cadastro realizado! Verifique seu e-mail para confirmar a conta antes de fazer login.'));
 }
 
 export async function logout() {

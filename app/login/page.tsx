@@ -59,7 +59,10 @@ function LoginForm() {
             />
           </div>
           <div className="space-y-1">
-            <label className="text-xs font-bold text-slate-500 uppercase tracking-wider" htmlFor="password">Senha</label>
+            <div className="flex items-center justify-between">
+              <label className="text-xs font-bold text-slate-500 uppercase tracking-wider" htmlFor="password">Senha</label>
+              <button type="button" className="text-xs font-bold text-brand hover:underline">Esqueceu a senha?</button>
+            </div>
             <input
               id="password"
               name="password"
