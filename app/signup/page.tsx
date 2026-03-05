@@ -1,20 +1,13 @@
 'use client';
 
-import React, { useState, Suspense } from 'react';
+import React, { Suspense, useActionState } from 'react';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
 import { motion } from 'motion/react';
 import { signup } from '@/app/auth/actions';
-import { Loader2, AlertCircle } from 'lucide-react';
+import { Loader2, AlertCircle, CheckCircle2 } from 'lucide-react';
 
 function SignupForm() {
-  const searchParams = useSearchParams();
-  const error = searchParams.get('error');
-  const [loading, setLoading] = useState(false);
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    setLoading(true);
-  };
+  const [state, formAction, isPending] = useActionState(signup, null);
 
   return (
     <div className="w-full max-w-md space-y-8 bg-white dark:bg-slate-900 p-8 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-800">
@@ -30,14 +23,21 @@ function SignupForm() {
         <p className="text-slate-500 dark:text-slate-400 text-sm">Junte-se à TFRC Engenharia</p>
       </div>
 
-      {error && (
+      {state?.error && (
         <div className="flex items-center gap-2 p-3 text-sm text-red-600 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-100 dark:border-red-900/30">
           <AlertCircle className="size-4 shrink-0" />
-          <p>{error}</p>
+          <p>{state.error}</p>
         </div>
       )}
 
-      <form action={signup} onSubmit={handleSubmit} className="space-y-6">
+      {state?.message && (
+        <div className="flex items-center gap-2 p-3 text-sm text-green-600 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-100 dark:border-green-900/30">
+          <CheckCircle2 className="size-4 shrink-0" />
+          <p>{state.message}</p>
+        </div>
+      )}
+
+      <form action={formAction} className="space-y-6">
         <div className="space-y-4">
           <div className="space-y-1">
             <label className="text-xs font-bold text-slate-500 uppercase tracking-wider" htmlFor="email">E-mail</label>
@@ -66,10 +66,10 @@ function SignupForm() {
 
         <button
           type="submit"
-          disabled={loading}
+          disabled={isPending}
           className="w-full bg-brand text-white font-bold py-3 rounded-xl hover:bg-brand-dark transition-all shadow-lg shadow-brand/20 flex items-center justify-center gap-2 disabled:opacity-70"
         >
-          {loading ? <Loader2 className="size-4 animate-spin" /> : 'Cadastrar'}
+          {isPending ? <Loader2 className="size-4 animate-spin" /> : 'Cadastrar'}
         </button>
       </form>
 
