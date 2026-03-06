@@ -28,19 +28,14 @@ export async function login(prevState: AuthState, formData: FormData): Promise<A
     let message = error.message;
     if (message === 'Invalid login credentials') {
       message = 'E-mail ou senha incorretos. Verifique se você já confirmou seu e-mail ou se possui uma conta.';
+    } else if (message === 'Email not confirmed') {
+      message = 'Por favor, confirme seu e-mail antes de fazer login. Verifique sua caixa de entrada ou spam.';
     }
     return { error: message };
   }
 
   revalidatePath('/', 'layout');
-  try {
-    redirect('/');
-  } catch (error) {
-    if ((error as any).digest?.startsWith('NEXT_REDIRECT')) {
-      throw error;
-    }
-    throw error;
-  }
+  return redirect('/');
 }
 
 export async function signup(prevState: AuthState, formData: FormData): Promise<AuthState> {
@@ -57,7 +52,7 @@ export async function signup(prevState: AuthState, formData: FormData): Promise<
     email,
     password,
     options: {
-      emailRedirectTo: `${process.env.APP_URL}/auth/callback`,
+      emailRedirectTo: `${process.env.APP_URL || 'https://ais-dev-uskotmj43ocbfwbx5xqgph-357803714969.us-east1.run.app'}/auth/callback`,
     },
   });
 
@@ -73,12 +68,5 @@ export async function logout() {
   const supabase = await createClient();
   await supabase.auth.signOut();
   revalidatePath('/', 'layout');
-  try {
-    redirect('/login');
-  } catch (error) {
-    if ((error as any).digest?.startsWith('NEXT_REDIRECT')) {
-      throw error;
-    }
-    throw error;
-  }
+  redirect('/login');
 }
