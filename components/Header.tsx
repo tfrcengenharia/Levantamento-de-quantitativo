@@ -5,48 +5,26 @@ import Image from 'next/image';
 import { Menu, LogOut, User } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import { logout } from '@/app/auth/actions';
-import { usePathname } from 'next/navigation';
-
-import Link from 'next/link';
 
 export default function Header() {
   const [user, setUser] = useState<any>(null);
-  const [supabase] = useState(() => createClient());
-  const pathname = usePathname();
+  const supabase = createClient();
 
   useEffect(() => {
     const getUser = async () => {
       try {
         const { data, error } = await supabase.auth.getUser();
-        if (error) {
-          // Only log if it's not a missing session error
-          if (error.message !== 'Auth session missing!') {
-            console.error('Error fetching user:', error);
-          }
-          return;
+        if (!error && data?.user) {
+          setUser(data.user);
+        } else {
+          setUser(null);
         }
-        setUser(data?.user);
       } catch (err) {
-        console.error('Unexpected error fetching user:', err);
+        setUser(null);
       }
     };
-
     getUser();
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-    });
-
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, [supabase]);
-
-  const navItems = [
-    { name: 'Alvenaria', href: '/' },
-    { name: 'Esquadrias', href: '/esquadrias' },
-    { name: 'Histórico de Vistorias', href: '#' },
-  ];
+  }, [supabase.auth]);
 
   return (
     <header className="flex items-center justify-between border-b border-brand/10 bg-white dark:bg-slate-900 px-6 py-4 lg:px-20">
@@ -63,25 +41,8 @@ export default function Header() {
         <h2 className="text-xl font-bold tracking-tight text-brand">TFRC Engenharia</h2>
       </div>
       <nav className="hidden md:flex items-center gap-8">
-        {navItems.map((item) => {
-          const isActive = item.href === '/' 
-            ? pathname === '/' 
-            : pathname.startsWith(item.href);
-          
-          return (
-            <Link 
-              key={item.name}
-              href={item.href}
-              className={`text-sm font-medium transition-colors pb-1 border-b-2 ${
-                isActive 
-                  ? 'text-brand border-brand font-semibold' 
-                  : 'text-slate-500 dark:text-slate-400 border-transparent hover:text-brand'
-              }`}
-            >
-              {item.name}
-            </Link>
-          );
-        })}
+        <a className="text-brand text-sm font-semibold border-b-2 border-brand pb-1" href="#">Nova Ficha</a>
+        <a className="text-slate-500 dark:text-slate-400 text-sm font-medium hover:text-brand transition-colors" href="#">Histórico de Vistorias</a>
       </nav>
       <div className="flex items-center gap-4">
         <div className="text-right hidden sm:block">

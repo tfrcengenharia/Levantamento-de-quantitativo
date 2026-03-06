@@ -37,21 +37,55 @@ export async function updateSession(request: NextRequest) {
   );
 
   // refreshing the auth token
-  const { data, error } = await supabase.auth.getUser();
-  const user = data?.user;
+  const { data, error: authError } = await supabase.auth.getUser();
+  
+  // If we have an error that indicates the session is invalid (like Refresh Token Not Found),
+  // we should ensure the user is redirected to login if they are on a protected route.
+  const isInvalidSession = authError && (
+    authError.message?.includes('Refresh Token') || 
+    authError.message?.includes('invalid_grant') ||
+    (authError as any).__isAuthError
+  );
+
+  if (isInvalidSession) {
+    // If the session is invalid, we want to make sure we clear any stale cookies
+    // and redirect to login if we're not already on a public page.
+    const url = request.nextUrl.clone();
+    
+    // If we're on a protected route, redirect to login
+    if (!request.nextUrl.pathname.startsWith('/login') && 
+        !request.nextUrl.pathname.startsWith('/signup') && 
+        !request.nextUrl.pathname.startsWith('/auth')) {
+      url.pathname = '/login';
+      const response = NextResponse.redirect(url);
+      // Copy headers from supabaseResponse which should contain the cookie-clearing instructions
+      supabaseResponse.headers.forEach((value, key) => {
+        response.headers.set(key, value);
+      });
+      return response;
+    }
+  }
+
+  const user = isInvalidSession ? null : data?.user;
 
   if (!user && !request.nextUrl.pathname.startsWith('/login') && !request.nextUrl.pathname.startsWith('/signup') && !request.nextUrl.pathname.startsWith('/auth')) {
-    // no user, potentially respond by redirecting the user to the login page
     const url = request.nextUrl.clone();
     url.pathname = '/login';
-    return NextResponse.redirect(url);
+    const response = NextResponse.redirect(url);
+    supabaseResponse.headers.forEach((value, key) => {
+      response.headers.set(key, value);
+    });
+    return response;
   }
 
   if (user && (request.nextUrl.pathname.startsWith('/login') || request.nextUrl.pathname.startsWith('/signup'))) {
-    // user is logged in, redirect to home
     const url = request.nextUrl.clone();
     url.pathname = '/';
-    return NextResponse.redirect(url);
+    const response = NextResponse.redirect(url);
+    supabaseResponse.headers.forEach((value, key) => {
+      response.headers.set(key, value);
+    });
+    return response;
   }
 
   return supabaseResponse;
