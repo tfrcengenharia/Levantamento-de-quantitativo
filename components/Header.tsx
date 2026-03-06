@@ -5,14 +5,12 @@ import Image from 'next/image';
 import { Menu, LogOut, User } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import { logout } from '@/app/auth/actions';
-import { usePathname } from 'next/navigation';
 
 import Link from 'next/link';
 
 export default function Header() {
   const [user, setUser] = useState<any>(null);
   const [supabase] = useState(() => createClient());
-  const pathname = usePathname();
 
   useEffect(() => {
     const getUser = async () => {
@@ -42,12 +40,6 @@ export default function Header() {
     };
   }, [supabase]);
 
-  const navItems = [
-    { name: 'Alvenaria', href: '/' },
-    { name: 'Esquadrias', href: '/esquadrias' },
-    { name: 'Histórico de Vistorias', href: '#' },
-  ];
-
   return (
     <header className="flex items-center justify-between border-b border-brand/10 bg-white dark:bg-slate-900 px-6 py-4 lg:px-20">
       <div className="flex items-center gap-4">
@@ -63,22 +55,9 @@ export default function Header() {
         <h2 className="text-xl font-bold tracking-tight text-brand">TFRC Engenharia</h2>
       </div>
       <nav className="hidden md:flex items-center gap-8">
-        {navItems.map((item) => {
-          const isActive = pathname === item.href;
-          return (
-            <Link 
-              key={item.name}
-              href={item.href}
-              className={`text-sm font-medium transition-colors pb-1 border-b-2 ${
-                isActive 
-                  ? 'text-brand border-brand font-semibold' 
-                  : 'text-slate-500 dark:text-slate-400 border-transparent hover:text-brand'
-              }`}
-            >
-              {item.name}
-            </Link>
-          );
-        })}
+        <Link className="text-brand text-sm font-semibold border-b-2 border-brand pb-1" href="/">Alvenaria</Link>
+        <Link className="text-slate-500 dark:text-slate-400 text-sm font-medium hover:text-brand transition-colors" href="/esquadrias">Esquadrias</Link>
+        <Link className="text-slate-500 dark:text-slate-400 text-sm font-medium hover:text-brand transition-colors" href="#">Histórico de Vistorias</Link>
       </nav>
       <div className="flex items-center gap-4">
         <div className="text-right hidden sm:block">
