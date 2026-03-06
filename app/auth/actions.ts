@@ -33,7 +33,14 @@ export async function login(prevState: AuthState, formData: FormData): Promise<A
   }
 
   revalidatePath('/', 'layout');
-  redirect('/');
+  try {
+    redirect('/');
+  } catch (error) {
+    if ((error as any).digest?.startsWith('NEXT_REDIRECT')) {
+      throw error;
+    }
+    throw error;
+  }
 }
 
 export async function signup(prevState: AuthState, formData: FormData): Promise<AuthState> {
@@ -66,5 +73,12 @@ export async function logout() {
   const supabase = await createClient();
   await supabase.auth.signOut();
   revalidatePath('/', 'layout');
-  redirect('/login');
+  try {
+    redirect('/login');
+  } catch (error) {
+    if ((error as any).digest?.startsWith('NEXT_REDIRECT')) {
+      throw error;
+    }
+    throw error;
+  }
 }
